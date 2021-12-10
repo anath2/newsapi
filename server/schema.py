@@ -12,6 +12,9 @@ class NewsDetail(BaseModel):
     sentiment: Optional[int]
     ml_summary: Optional[str]
 
+    class Config:
+        orm = True
+
 
 class NewsSummary(BaseModel):
     id: int
@@ -19,10 +22,16 @@ class NewsSummary(BaseModel):
     headline: str
     sentiment: Optional[int]
 
+    class Config:
+        orm = True
+
 
 class Country(BaseModel):
     id: int
     iso: str
     num_stories: int
     last_updated_on: datetime
+
+    class Config:
+        orm = True
 
