@@ -5,7 +5,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
 
-if os.environ.get('API_ENV').lower().strip() == 'testing':
+if os.environ.get("API_ENV").lower().strip() == "testing":
     url = c.SQLALCHEMY_DATABASE_TEST_URL
 else:
     url = c.SQLALCHEMY_DATABASE_URL
