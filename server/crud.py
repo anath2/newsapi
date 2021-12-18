@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 
 
 def create_country(conn: Session, country: schema.CountryCreate) -> model.Country:
-    db_country = model.Country(**country.as_dict())
+    db_country = model.Country(**country.dict())
     conn.add(db_country)
     conn.commit()
     conn.refresh(db_country)
@@ -12,7 +12,7 @@ def create_country(conn: Session, country: schema.CountryCreate) -> model.Countr
 
 
 def create_news(conn: Session, country_id: int, news: schema.NewsCreate) -> model.News:
-    db_news = model.News(**news.as_dict(), country_id=country_id)
+    db_news = model.News(**news.dict(), country_id=country_id)
     conn.add(db_news)
     conn.commit()
     conn.refresh(db_news)
