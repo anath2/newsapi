@@ -17,7 +17,7 @@ class News(NewsBase):
     id: int
 
     class Config:
-        orm = True
+        orm_mode = True
 
 
 class NewsSummary(NewsBase):
@@ -38,8 +38,8 @@ class CountryCreate(CountryBase):
     pass
 
 
-class Country(BaseModel):
+class Country(CountryBase):
     id: int
 
     class Config:
-        orm = True
+        orm_mode = True

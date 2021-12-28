@@ -1,4 +1,6 @@
-from typing import Optional
+from re import S
+from typing import List, Optional
+
 from . import schema, model
 from sqlalchemy.orm import Session
 
@@ -19,17 +21,22 @@ def create_news(conn: Session, country_id: int, news: schema.NewsCreate) -> mode
     return db_news
 
 
-def read_country(conn, country_id) -> Optional[model.Country]:
-    return conn.query(model.Country).filter(id=country_id).first()
+def read_country(conn: Session, country_id: int) -> Optional[model.Country]:
+    return conn.query(model.Country).filter(model.Country.id == country_id).first()
 
 
-def read_country_by_iso(conn, iso: str) -> Optional[model.Country]:
-    return conn.query(model.Country).filter(iso=iso).first()
+def read_country_by_iso(conn: Session, iso: str) -> Optional[model.Country]:
+    return conn.query(model.Country).filter(model.Country.iso == iso).first()
 
 
-def read_news(conn, news_id) -> Optional[model.News]:
-    return conn.query(model.News).filter(id=news_id).first()
+def read_news(conn: Session, news_id: int) -> Optional[model.News]:
+    return conn.query(model.News).filter(model.News.id == news_id).first()
 
 
-def read_news_by_headline(conn, headline: str) -> Optional[model.News]:
-    return conn.query(model.News).filter(headline=headline).first()
+def read_news_by_country(conn: Session, country_id: int) -> Optional[List[model.News]]:
+    country = conn.query(model.Country).filter(model.Country.id == country_id).first()
+    return country.news
+
+
+def read_news_by_headline(conn: Session, headline: str) -> Optional[model.News]:
+    return conn.query(model.News).filter(model.News.headline == headline).first()
