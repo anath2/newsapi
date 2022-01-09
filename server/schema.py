@@ -7,6 +7,7 @@ class NewsBase(BaseModel):
     url: str
     headline: str
     description: str
+    text: Optional[str]
 
 
 class NewsCreate(NewsBase):

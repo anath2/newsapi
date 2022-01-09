@@ -12,6 +12,8 @@ python-dotenv = "^0.19.2"
 aiohttp = {extras = ["speedups"], version = "^3.8.1"}
 httpx = "^0.21.1"
 SQLAlchemy = "^1.4.27"
+bs4 = "^0.0.1"
+celery = "^5.2.3"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

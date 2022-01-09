@@ -1,12 +1,17 @@
+# TODO
+# - Add support for background task status
+# - Add support for storing downloaded data in global variable accessible across app
+
 __version__ = "0.1.0"
 
 from typing import List
 from dotenv import load_dotenv
+from aiohttp import ClientSession
 from sqlalchemy.orm import Session
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends, HTTPException, BackgroundTasks
 
-from . import schema, crud
-from .db import SessionLocal
+from . import schema, core
+from .db import SessionLocal, crud
 
 
 load_dotenv()
@@ -65,3 +70,23 @@ async def get_article(id, db: Session = Depends(get_db)):
     if not db_news:
         raise HTTPException(status_code=404, detail="News article not found")
     return db_news
+
+
+@app.post("/news/download")
+async def start_news_download(
+    news_list: List[schema.NewsCreate], background_tasks: BackgroundTasks
+):
+    background_tasks.add_task(_download_news, news_list)
+
+
+async def _download_news(news_list: List[schema.NewsCreate]) -> List[schema.NewsCreate]:
+    result = []
+    async with ClientSession() as sess:
+        for n in news_list:
+            txt = await core.fetch_text(n.url, sess)
+            # TODO Update this
+            n_ = n.copy()
+            n_.text = txt
+            result.append(txt)
+
+    return result

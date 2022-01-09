@@ -1,5 +1,5 @@
 import os
-from . import constants as c
+from .. import constants as c
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base

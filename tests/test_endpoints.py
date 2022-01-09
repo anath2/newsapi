@@ -1,10 +1,3 @@
-"""
-Available endpoints:
-    /country
-    /news
-    /news/{news_id}
-"""
-
 import pytest
 from datetime import datetime
 from server import app
